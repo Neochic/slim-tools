@@ -1,0 +1,8 @@
+imports:
+    - { resource: 'database.yml' }
+    - { resource: 'mail.yml' }
+parameters:
+  core:
+    mode: dev
+    log.enabled: true,
+    log.level: error

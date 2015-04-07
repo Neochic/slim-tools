@@ -1,0 +1,5 @@
+parameters:
+  mail:
+    host: smtp.gmail.com
+    username:
+    password: 

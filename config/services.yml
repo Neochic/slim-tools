@@ -1,0 +1,11 @@
+services:
+  app:
+    class: Neochic\SlimTools\Core\App
+    arguments:
+      - %core%
+  session:
+    class: Neochic\SlimTools\Misc\Session
+  router.rest:
+    class: Neochic\SlimTools\Router\RestRouter
+    arguments:
+      - @app
