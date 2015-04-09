@@ -10,7 +10,7 @@ class Core
     public function __construct($config, $boot = 'app')
     {
         $container = new ContainerBuilder();
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/config'));
+        $loader = new YamlFileLoader($container, new FileLocator());
         $loader->load(__DIR__ . '/../config/core.yml');
         $loader->load($config);
         $app = $container->get($boot);
