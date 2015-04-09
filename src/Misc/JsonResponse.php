@@ -25,9 +25,9 @@ class JsonResponse
     protected function createResponse($type, $data) {
         $response = array("status" => $type);
         if($type === "error") {
-            $reponse["message"] = $data;
+            $response["message"] = $data;
         } else {
-            $reponse["data"] = $data;
+            $response["data"] = $data;
         }
         return $response;
     }

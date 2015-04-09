@@ -13,6 +13,7 @@ class Core
         $loader = new YamlFileLoader($container, new FileLocator());
         $loader->load(__DIR__ . '/../config/core.yml');
         $loader->load($config);
+        $container->compile();
         $app = $container->get($boot);
         $app->setContainer($container);
         $app->run();

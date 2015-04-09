@@ -1,5 +1,7 @@
 <?php
 namespace Neochic\SlimTools\Controller;
+use Doctrine\ORM\EntityManagerInterface;
+use Neochic\SlimTools\Core\App;
 
 abstract class Controller
 {
@@ -7,7 +9,7 @@ abstract class Controller
     protected $em;
     protected $name;
 
-    public function __construct(\Neochic\SlimTools\Core\App $app, \Doctrine\ORM\EntityManagerInterface $em)
+    public function __construct(App $app, EntityManagerInterface $em)
     {
         $this->app = $app;
         $this->em = $em;
