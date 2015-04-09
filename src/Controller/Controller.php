@@ -1,14 +1,16 @@
 <?php
 namespace Neochic\SlimTools\Controller;
 
-class Controller
+abstract class Controller
 {
     protected $app;
-    protected $name = false;
+    protected $em;
+    protected $name;
 
-    function __construct(\Neochic\SlimTools\Core\App $app)
+    public function __construct(\Neochic\SlimTools\Core\App $app, \Doctrine\ORM\EntityManagerInterface $em)
     {
         $this->app = $app;
+        $this->em = $em;
         if (!$this->name) {
             $this->name = substr(strrchr(get_called_class(), "\\"), 1);
         }

@@ -1,6 +1,15 @@
 parameters:
-  database:
+  database.sqlite:
+    driver: pdo_sqlite
+    path: ../db.sqlite
+  database.mysql:
+    driver: pdo_mysql
     host: localhost
-    name: app
-    username: admin
+    dbname: app
+    user: admin
     password: admin
+  database.migrations:
+    path: migrations
+    namespace: DoctrineMigrations
+    table: doctrine_migration_versions
+    name: Doctrine Migrations

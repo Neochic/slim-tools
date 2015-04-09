@@ -1,0 +1,4 @@
+parameters:
+  doctrine:
+    model.paths:
+      - ../src/Model

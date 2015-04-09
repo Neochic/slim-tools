@@ -1,39 +1,37 @@
 <?php
+/*
+ * Trivial abstraction layer for PHP session
+ */
 namespace Neochic\SlimTools\Misc;
 
 class Session
 {
-    public static function get($key)
+    public function __construct()
     {
-        SESSION::initSession();
+        if (session_id() === '') {
+            ini_set("session.use_trans_sid", 0);
+            ini_set("session.use_only_cookies", 1);
+            session_start();
+        }
+    }
+    public function get($key)
+    {
         if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
         }
         return false;
     }
 
-    public static function set($key, $val)
+    public function set($key, $val)
     {
-        SESSION::initSession();
         $_SESSION[$key] = $val;
         return true;
     }
 
-    public static function delete($key)
+    public function delete($key)
     {
-        SESSION::initSession();
         if (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);
-        }
-        return true;
-    }
-
-    public static function initSession()
-    {
-        if (session_id() === '') {
-            ini_set("session.use_trans_sid", 0);
-            ini_set("session.use_only_cookies", 1);
-            session_start();
         }
         return true;
     }

@@ -3,13 +3,14 @@ namespace Neochic\SlimTools\Core;
 
 use \Slim\Slim;
 
-class App
+class App extends Bootable
 {
     protected $slim;
-    protected $container;
 
-    function __construct(array $config)
+    public function __construct(array $config)
     {
+        parent::__construct($config);
+
         $this->slim = new Slim(array(
             'log.enabled' => $config['log.enabled'],
             'log.level' => constant('\Slim\Log::' . strtoupper($config['log.level'])),
@@ -28,19 +29,13 @@ class App
         }
     }
 
-    function run()
+    public function run()
     {
         $this->container->get('router.rest')->route();
         $this->slim->run();
     }
 
-    function setContainer($container)
-    {
-        $this->container = $container;
-    }
-
-    function getContainer()
-    {
-        return $this->container;
+    public function getSlim() {
+        return $this->slim;
     }
 }

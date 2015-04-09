@@ -14,7 +14,10 @@
     "symfony/dependency-injection": "~2.6",
     "symfony/config": "~2.6",
     "symfony/yaml": "~2.6",
-    "phpmailer/phpmailer": "~5.2"
+    "phpmailer/phpmailer": "~5.2",
+    "wixel/gump": "~1.1",
+    "doctrine/orm": "~2.5",
+    "doctrine/migrations": "1.0.*@dev"
   },
   "autoload": {
     "psr-4": { "Neochic\\SlimTools\\": "src/" }
