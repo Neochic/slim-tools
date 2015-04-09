@@ -5,7 +5,7 @@ use Slim\Slim;
 
 abstract class Controller
 {
-    protected $app;
+    protected $slim;
     protected $em;
     protected $name;
 
