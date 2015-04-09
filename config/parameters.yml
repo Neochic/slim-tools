@@ -3,7 +3,7 @@ imports:
     - { resource: 'doctrine.yml' }
     - { resource: 'mail.yml' }
 parameters:
-  core:
+  core: &core.default
     mode: dev
     log.enabled: true,
     log.level: error

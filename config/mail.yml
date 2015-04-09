@@ -1,5 +1,5 @@
 parameters:
-  mail:
+  mail: &mail.default
     host: smtp.gmail.com
     username:
     password: 
