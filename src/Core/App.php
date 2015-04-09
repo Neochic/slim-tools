@@ -7,11 +7,13 @@ class App extends Bootable
 {
     protected $slim;
 
-    public function __construct(array $config)
+    public function __construct(array $config, Slim $slim)
     {
         parent::__construct($config);
 
-        $this->slim = new Slim(array(
+        $this->slim = $slim;
+
+        $slim->config(array(
             'log.enabled' => $config['log.enabled'],
             'log.level' => constant('\Slim\Log::' . strtoupper($config['log.level'])),
             'debug' => false
@@ -33,9 +35,5 @@ class App extends Bootable
     {
         $this->container->get('router.rest')->route();
         $this->slim->run();
-    }
-
-    public function getSlim() {
-        return $this->slim;
     }
 }
