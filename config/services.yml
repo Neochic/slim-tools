@@ -36,5 +36,5 @@ services:
   controller:
     abstract: true
     arguments:
-      - @app
+      - @slim
       - @entity_manager
