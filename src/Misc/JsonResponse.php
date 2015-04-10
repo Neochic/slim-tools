@@ -1,34 +1,28 @@
 <?php
-/*
- * Helper to create json responses in JSend format
- * http://labs.omniti.com/labs/jsend
- */
+
 namespace Neochic\SlimTools\Misc;
 
-class JsonResponse
+class JsonResponse extends JSend
 {
-    public function success($data = null)
+    public function success($data = null, $context)
     {
-        return $this->createResponse("success", $data);
+        return addContext(parent::success($data), $context);
     }
 
-    public function fail($type, $data = null)
+    public function fail($type, $data = null, $context)
     {
-        return $this->createResponse("fail", array("type" => $type, "data" => $data));
+        return addContext(parent::fail($type, $data), $context);
     }
 
-    public function error($message)
+    public function error($message, $context)
     {
-        return $this->createResponse("error", $message);
+        return addContext(parent::error($message), $context);
     }
 
-    protected function createResponse($type, $data) {
-        $response = array("status" => $type);
-        if($type === "error") {
-            $response["message"] = $data;
-        } else {
-            $response["data"] = $data;
-        }
-        return $response;
+    protected function addContext($response, $context) {
+        return array(
+            'json' => $response,
+            'context' => $context
+        );
     }
 }

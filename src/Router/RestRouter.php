@@ -46,7 +46,7 @@ class RestRouter
 
                 $this->slim->view($this->view);
                 $result = call_user_func_array(array($service, $action), $params);
-                $this->slim->render(null, array('json' => $result));
+                $this->slim->render(null, $result);
             }
         })->via('GET', 'POST', 'DELETE', 'PUT');
     }
