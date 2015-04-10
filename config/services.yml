@@ -51,4 +51,5 @@ services:
     class: JMS\Serializer\Serializer
     factory: [@serializer.factory, createSerializer]
     arguments:
+      - %serializer%
       - @serializer.builder

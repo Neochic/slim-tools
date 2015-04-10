@@ -1,0 +1,3 @@
+parmaterers:
+  serializer: &serializer.default
+    annotation_path: ../vendor/jms/serializer/src
