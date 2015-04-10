@@ -5,7 +5,7 @@ use JMS\Serializer\SerializerBuilder;
 
 class SerializerFactory
 {
-    public static function createEntityManager(SerializerBuilder $serializerBuilder)
+    public static function createSerializer(SerializerBuilder $serializerBuilder)
     {
         return $serializerBuilder->build();
     }
