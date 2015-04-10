@@ -18,7 +18,7 @@ services:
   validator:
     class: Neochic\SlimTools\Core\Validator
   entity_manager.factory:
-    class: Neochic\SlimTools\Core\EntityManagerFactory
+    class: Neochic\SlimTools\Factory\EntityManagerFactory
   entity_manager:
     class: Doctrine\ORM\EntityManager
     factory: [@entity_manager.factory, createEntityManager]
@@ -27,6 +27,8 @@ services:
       - %doctrine%
   view.json:
     class: Neochic\SlimTools\View\Json
+    arguments:
+      - @serializer
   router.rest:
     class: Neochic\SlimTools\Router\RestRouter
     arguments:
@@ -38,3 +40,15 @@ services:
     arguments:
       - @slim
       - @entity_manager
+  serializer.builder.factory:
+    class: JMS\Serializer\SerializerBuilder
+  serializer.builder:
+    class: JMS\Serializer\SerializerBuilder
+    factory: [@serializer.builder.factory, create]
+  serializer.factory:
+    class: Neochic\SlimTools\Factory\SerializerFactory
+  serializer:
+    class: JMS\Serializer\Serializer
+    factory: [@serializer.factory, createSerializer]
+    arguments:
+      - @serializer.builder

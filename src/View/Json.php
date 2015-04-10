@@ -1,10 +1,21 @@
 <?php
 namespace Neochic\SlimTools\View;
 
+use \JMS\Serializer\Serializer;
+
 class Json extends \Slim\View
 {
+    protected $serializer;
+
+    public function __construct(Serializer $serializer)
+    {
+        $this->$serializer = $serializer;
+    }
+
     public function render($template, $data = null)
     {
-        echo json_encode($this->getData('json'));
+        $data = $this->getData('json');
+        $context = $this->getData('context') ?: null;
+        echo $this->serializer->serialize($data, 'json', $context);
     }
 }
