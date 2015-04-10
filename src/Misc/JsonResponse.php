@@ -6,17 +6,17 @@ class JsonResponse extends JSend
 {
     public function success($data = null, $context = null)
     {
-        return addContext(parent::success($data), $context);
+        return $this->addContext(parent::success($data), $context);
     }
 
     public function fail($type, $data = null, $context = null)
     {
-        return addContext(parent::fail($type, $data), $context);
+        return $this->addContext(parent::fail($type, $data), $context);
     }
 
     public function error($message, $context = null)
     {
-        return addContext(parent::error($message), $context);
+        return $this->addContext(parent::error($message), $context);
     }
 
     protected function addContext($response, $context = null) {
