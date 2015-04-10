@@ -9,6 +9,7 @@ class Json extends \Slim\View
 
     public function __construct(Serializer $serializer)
     {
+        parent::__construct();
         $this->serializer = $serializer;
     }
 
