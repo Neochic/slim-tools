@@ -1,6 +1,7 @@
 imports:
     - { resource: 'database.yml' }
     - { resource: 'doctrine.yml' }
+    - { resource: 'serializer.yml' }
     - { resource: 'mail.yml' }
 parameters:
   core: &core.default

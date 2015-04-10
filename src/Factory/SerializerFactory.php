@@ -2,7 +2,7 @@
 namespace Neochic\SlimTools\Factory;
 
 use JMS\Serializer\SerializerBuilder;
-use \Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 class SerializerFactory
 {

@@ -5,7 +5,7 @@
  */
 namespace Neochic\SlimTools\Misc;
 
-class JsonResponse
+class JSend
 {
     public function success($data = null)
     {
