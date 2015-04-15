@@ -40,6 +40,12 @@ services:
     arguments:
       - @slim
       - @entity_manager
+  serializer.IdenticalPropertyNamingStrategy:
+    class: JMS\Serializer\Naming\IdenticalPropertyNamingStrategy
+  serializer.SerializedNameAnnotationStrategy:
+    class: JMS\Serializer\Naming\SerializedNameAnnotationStrategy
+    arguments:
+      - @serializer.IdenticalPropertyNamingStrategy
   serializer.builder.factory:
     class: JMS\Serializer\SerializerBuilder
   serializer.builder:
@@ -53,3 +59,4 @@ services:
     arguments:
       - %serializer%
       - @serializer.builder
+      - @serializer.SerializedNameAnnotationStrategy
