@@ -34,6 +34,7 @@ class App extends Bootable
     public function run()
     {
         $this->container->get('router.rest')->route();
+        $this->container->get('router.media')->route();
         $this->slim->run();
     }
 }

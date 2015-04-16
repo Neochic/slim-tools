@@ -29,6 +29,8 @@ services:
     class: Neochic\SlimTools\View\Json
     arguments:
       - @serializer
+  view.media:
+    class: Neochic\SlimTools\View\Media
   router:
     abstract: true
     arguments:
@@ -39,6 +41,11 @@ services:
     parent: router
     arguments:
       - @view.json
+  router.media:
+    class: Neochic\SlimTools\Router\MediaRouter
+    parent: router
+    arguments:
+      - @view.media
   controller:
     abstract: true
     arguments:
