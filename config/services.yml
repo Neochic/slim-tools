@@ -29,11 +29,15 @@ services:
     class: Neochic\SlimTools\View\Json
     arguments:
       - @serializer
-  router.rest:
-    class: Neochic\SlimTools\Router\RestRouter
+  router:
+    abstract: true
     arguments:
       - @app
       - @slim
+  router.rest:
+    class: Neochic\SlimTools\Router\RestRouter
+    parent: router
+    arguments:
       - @view.json
   controller:
     abstract: true
