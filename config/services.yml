@@ -4,11 +4,13 @@ services:
     arguments:
       - %core%
       - @slim
-  console:
+  console_base:
     class: Neochic\SlimTools\Core\Console
     arguments:
       - %database.migrations%
       - @entity_manager
+  console:
+    parent: console_base
   slim:
     class: Slim\Slim
   session:

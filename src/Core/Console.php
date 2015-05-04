@@ -18,10 +18,12 @@ use Doctrine\ORM\Tools\Console\ConsoleRunner;
 class Console extends Bootable
 {
     protected $em;
+    protected $commands;
 
     public function __construct(array $config, EntityManager $em)
     {
         parent::__construct($config);
+        $this->commands = array_slice(func_get_args(), 2);
         $this->em = $em;
     }
 
@@ -52,6 +54,8 @@ class Console extends Bootable
         foreach($commands as $command) {
             $command->setMigrationConfiguration($configuration);
         }
+
+        $commands = array_merge($commands, $this->commands);
 
         ConsoleRunner::createApplication($helperset, $commands)->run();
     }
