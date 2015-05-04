@@ -5,7 +5,7 @@ use Symfony\Component\Console\Helper\HelperSet;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
-use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Helper\DialogHelper;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
@@ -30,7 +30,7 @@ class Console extends Bootable
         $helperset =new HelperSet(array(
             'db' => new ConnectionHelper($this->em->getConnection()),
             'em' => new EntityManagerHelper($this->em),
-            'dialog' => new QuestionHelper()
+            'dialog' => new DialogHelper()
         ));
 
         $configuration = new Configuration($this->em->getConnection());
