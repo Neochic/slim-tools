@@ -2,3 +2,4 @@ parameters:
   doctrine: &doctrine.default
     model.paths:
       - ../src/Model
+    proxyMode: "AUTOGENERATE_FILE_NOT_EXISTS"

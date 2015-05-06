@@ -10,6 +10,7 @@ class EntityManagerFactory
         $isDevMode = true;
 
         $config = Setup::createAnnotationMetadataConfiguration($doctrine['model.paths'], $isDevMode);
+        $config->setAutoGenerateProxyClasses(constant("Doctrine\\Common\\Proxy\\AbstractProxyFactory::". $doctrine['proxyMode']));
 
         return EntityManager::create($database, $config);
     }
