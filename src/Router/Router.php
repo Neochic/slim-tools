@@ -13,6 +13,7 @@ class Router
     protected $view;
     protected $passed;
     protected $servicePrefix;
+    protected $template = null;
 
     public function __construct(App $app, Slim $slim, View $view)
     {
@@ -72,7 +73,7 @@ class Router
 
     protected function render($data) {
         $this->slim->view($this->view);
-        $this->slim->render(null, $data);
+        $this->slim->render($this->template, $data);
     }
 
     protected function attachRoute($servicePrefix, $urlPrefix = '') {
