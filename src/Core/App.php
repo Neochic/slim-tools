@@ -6,10 +6,13 @@ use \Slim\Slim;
 class App extends Bootable
 {
     protected $slim;
+    protected $routers;
 
-    public function __construct(array $config, Slim $slim)
+    public function __construct(array $config, Slim $slim, array $routers)
     {
         parent::__construct($config);
+
+        $this->routers = $routers;
 
         $this->slim = $slim;
 
@@ -33,8 +36,9 @@ class App extends Bootable
 
     public function run()
     {
-        $this->container->get('router.rest')->route();
-        $this->container->get('router.media')->route();
+        foreach($this->routers as $router) {
+            $this->container->get($router)->route();
+        }
         $this->slim->run();
     }
 }

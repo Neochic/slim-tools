@@ -37,7 +37,7 @@ class Router
     protected function getActionName($name) {
         $method = strtolower($this->slim->request->getMethod());
         $actionPrefix = $method === 'get' ? null : $method;
-        $action = ($name ?: 'Index').'Action';
+        $action = $name.'Action';
         if($actionPrefix) {
             $action = $actionPrefix . ucfirst($action);
         }
@@ -61,7 +61,7 @@ class Router
     protected function handleRequest($params) {
         if(count($params) >= 1) {
             $controller = array_shift($params);
-            $action = array_shift($params);
+            $action = array_shift($params) ?: 'index';
             $data = $this->callAction($this->servicePrefix, $controller, $action, $params);
             if(!$this->passed) {
                 $this->render($data, $controller, $action);
@@ -71,7 +71,7 @@ class Router
         }
     }
 
-    protected function render($data) {
+    protected function render($data, $controller, $action) {
         $this->slim->view($this->view);
         $this->slim->render($this->template, $data);
     }

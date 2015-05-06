@@ -8,8 +8,8 @@ class RestRouter extends Router
         $this->attachRoute('json', '/json');
     }
 
-    protected function render($data) {
+    protected function render($data, $controller, $action) {
         $this->slim->contentType('application/json');
-        parent::render($data);
+        parent::render($data, $controller, $action);
     }
 }
