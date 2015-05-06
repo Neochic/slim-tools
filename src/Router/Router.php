@@ -64,7 +64,7 @@ class Router
             $action = array_shift($params);
             $data = $this->callAction($this->servicePrefix, $controller, $action, $params);
             if(!$this->passed) {
-                $this->render($data);
+                $this->render($data, $controller, $action);
             }
         } else {
             $this->slim->pass();
