@@ -18,7 +18,8 @@
     "wixel/gump": "~1.1",
     "doctrine/orm": "~2.5",
     "doctrine/migrations": "1.0.*@dev",
-    "jms/serializer": "0.16.0"
+    "jms/serializer": "0.16.0",
+    "doctrine/common": "~2.5"
   },
   "autoload": {
     "psr-4": { "Neochic\\SlimTools\\": "src/" }
