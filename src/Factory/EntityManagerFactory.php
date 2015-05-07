@@ -9,7 +9,7 @@ class EntityManagerFactory
     public static function createEntityManager(array $database, array $doctrine) {
         $isDevMode = true;
 
-        $config = Setup::createAnnotationMetadataConfiguration($doctrine['model.paths'], $isDevMode);
+        $config = Setup::createAnnotationMetadataConfiguration($doctrine['model.paths'], $isDevMode, null, null, false);
 
         return EntityManager::create($database, $config);
     }
