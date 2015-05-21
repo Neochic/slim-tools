@@ -17,6 +17,9 @@ class EntityManagerFactory
             AnnotationRegistry::registerAutoloadNamespace($namespace, $path);
         }
 
-        return EntityManager::create($database, $config);
+        $em = EntityManager::create($database, $config);
+        $em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+
+        return $em;
     }
 }
