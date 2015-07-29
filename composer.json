@@ -19,7 +19,8 @@
     "doctrine/migrations": "1.0.0-rc1",
     "jms/serializer": "0.16.0",
     "doctrine/common": "~2.5",
-    "symfony/Validator": "^2.7"
+    "symfony/Validator": "^2.7",
+    "egulias/email-validator": "^1.2"
   },
   "autoload": {
     "psr-4": { "Neochic\\SlimTools\\": "src/" }
