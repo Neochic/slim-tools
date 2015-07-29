@@ -28,6 +28,7 @@ services:
     arguments:
       - %database.mysql%
       - %doctrine%
+      - @classLoader
   view.json:
     class: Neochic\SlimTools\View\Json
     arguments:
