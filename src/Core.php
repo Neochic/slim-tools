@@ -8,12 +8,9 @@ use Composer\Autoload\ClassLoader;
 
 class Core
 {
-    public function __construct($config, $boot = 'app', ClassLoader $classLoader = null)
+    public function __construct($config, ClassLoader $classLoader, $boot = 'app')
     {
         $container = new ContainerBuilder();
-        if(!$classLoader) {
-            $classLoader = new ClassLoader();
-        }
         $container->set('classLoader', $classLoader);
         $loader = new YamlFileLoader($container, new FileLocator());
         $loader->load(__DIR__ . '/../config/core.yml');
