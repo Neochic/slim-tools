@@ -23,6 +23,13 @@ services:
   validator:
     class: Symfony\Component\Validator\Validator\ValidatorInterface;
     factory: [@validator.factory, createValidator]
+    arguments:
+      - @validator.constraintFactory
+  validator.constraintFactory:
+    class: Neochic\SlimTools\Factory\ContraintValidatorFactory
+    arguments:
+      - null
+      - @app
   entity_manager.factory:
     class: Neochic\SlimTools\Factory\EntityManagerFactory
   entity_manager:
@@ -32,6 +39,10 @@ services:
       - %database.mysql%
       - %doctrine%
       - @classLoader
+  service.managerRegistry:
+    class: Neochic\SlimTools\Service\ManagerRegistry
+    arguments:
+      - @entity_manager
   view.json:
     class: Neochic\SlimTools\View\Json
     arguments:
