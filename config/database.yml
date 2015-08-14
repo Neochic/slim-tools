@@ -8,6 +8,7 @@ parameters:
     dbname: app
     user: admin
     password: admin
+    charset: utf8
   database.migrations: &database.migrations.default
     path: ../migrations
     namespace: DoctrineMigrations
