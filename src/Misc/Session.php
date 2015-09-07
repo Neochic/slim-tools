@@ -29,7 +29,7 @@ class Session
 
     public function get($key)
     {
-        if(isset($_COOKIE[session_name()])) {
+        if($this->__isStarted() || isset($_COOKIE[session_name()])) {
             $this->start();
             if (isset($_SESSION[$key])) {
                 return $_SESSION[$key];
