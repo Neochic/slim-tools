@@ -5,6 +5,7 @@ services:
       - %core%
       - @slim
       - %routers%
+      - %middlewares%
   console_base:
     class: Neochic\SlimTools\Core\Console
     arguments:

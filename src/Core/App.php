@@ -8,11 +8,12 @@ class App extends Bootable
     protected $slim;
     protected $routers;
 
-    public function __construct(array $config, Slim $slim, array $routers)
+    public function __construct(array $config, Slim $slim, array $routers, array $middlewares)
     {
         parent::__construct($config);
 
         $this->routers = $routers;
+        $this->middlewares = $middlewares;
 
         $this->slim = $slim;
 
@@ -36,6 +37,10 @@ class App extends Bootable
 
     public function run()
     {
+        foreach($this->middlewares as $middleware) {
+            $this->slim->add($this->container->get($middleware));
+        }
+
         foreach($this->routers as $router) {
             $this->container->get($router)->route();
         }

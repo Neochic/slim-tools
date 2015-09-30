@@ -10,3 +10,4 @@ parameters:
   routers:
     - router.rest
     - router.media
+  middlewares:
