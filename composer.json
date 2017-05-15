@@ -14,13 +14,11 @@
     "symfony/dependency-injection": "~2.6",
     "symfony/config": "~2.6",
     "symfony/yaml": "~2.6",
-    "phpmailer/phpmailer": "~5.2",
     "doctrine/orm": "~2.5",
     "doctrine/migrations": "1.0.0-rc1",
     "jms/serializer": "0.16.0",
     "doctrine/common": "~2.5",
-    "symfony/Validator": "^2.7",
-    "egulias/email-validator": "^1.2"
+    "symfony/Validator": "^2.7"
   },
   "autoload": {
     "psr-4": { "Neochic\\SlimTools\\": "src/" }

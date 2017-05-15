@@ -1,7 +1,6 @@
 imports:
     - { resource: 'database.yml' }
     - { resource: 'doctrine.yml' }
-    - { resource: 'mail.yml' }
 parameters:
   core: &core.default
     mode: dev
