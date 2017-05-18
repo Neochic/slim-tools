@@ -1,0 +1,26 @@
+app:
+  mode: prod
+  routers:
+    - router.rest
+    - router.media
+  middlewares: []
+database:
+  driver: pdo_mysql
+  host: localhost
+  dbname: ~
+  user: ~
+  password: ~
+  charset: utf8
+migrations:
+  path: ../migrations
+  namespace: DoctrineMigrations
+  table: doctrine_migration_versions
+  name: Doctrine Migrations
+doctrine:
+  model.paths:
+    - ../src/Entity
+  annotation.paths:
+    JMS\Serializer\Annotation: ../vendor/jms/serializer/src
+  proxyMode: AUTOGENERATE_FILE_NOT_EXISTS
+serializer:
+  annotation_path: ../vendor/jms/serializer/src

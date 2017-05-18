@@ -1,6 +1,6 @@
 <?php
 
-namespace Neochic\SlimTools\Core;
+namespace Neochic\SlimTools\Factory;
 use Symfony\Component\Validator\Validation;
 
 class ValidatorFactory

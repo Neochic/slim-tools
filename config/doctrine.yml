@@ -1,8 +1,0 @@
-parameters:
-  doctrine: &doctrine.default
-    model.paths:
-      - ../src/Model
-    annotation.paths:
-      JMS\Serializer\Annotation: ../vendor/jms/serializer/src
-      Symfony\Component\Validator\Constraints: ../vendor/
-    proxyMode: "AUTOGENERATE_FILE_NOT_EXISTS"

@@ -1,6 +1,6 @@
 <?php
 /*
- * Trivial abstraction layer for PHP session
+ * Trivial abstraction layer for PHP sessions
  */
 namespace Neochic\SlimTools\Misc;
 
@@ -47,9 +47,14 @@ class Session
 
     public function delete($key)
     {
-        if (isset($_SESSION[$key])) {
-            unset($_SESSION[$key]);
-        }
-        return true;
+	    if($this->__isStarted() || isset($_COOKIE[session_name()])) {
+		    $this->start();
+		    if (isset($_SESSION[$key])) {
+			    unset($_SESSION[$key]);
+		    }
+		    return true;
+	    }
+
+	    return false;
     }
 }

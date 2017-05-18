@@ -5,7 +5,6 @@ use Symfony\Component\Console\Helper\HelperSet;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
-use Symfony\Component\Console\Helper\DialogHelper;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
@@ -14,6 +13,7 @@ use Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Symfony\Component\Console\Helper\QuestionHelper;
 
 class Console extends Bootable
 {
@@ -29,10 +29,10 @@ class Console extends Bootable
 
     public function run()
     {
-        $helperset =new HelperSet(array(
+        $helperset = new HelperSet(array(
             'db' => new ConnectionHelper($this->em->getConnection()),
             'em' => new EntityManagerHelper($this->em),
-            'dialog' => new DialogHelper()
+            'dialog' => new QuestionHelper()
         ));
 
         $configuration = new Configuration($this->em->getConnection());

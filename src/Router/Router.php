@@ -1,86 +1,93 @@
 <?php
 
 namespace Neochic\SlimTools\Router;
-use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use Neochic\SlimTools\Core\App;
-use Slim\Slim;
-use \Slim\View;
 
-class Router
-{
-    protected $app;
-    protected $slim;
-    protected $view;
-    protected $passed;
-    protected $servicePrefix;
-    protected $template = null;
+use Slim\App as Slim;
+use \Slim\Http\Request;
+use \Neochic\SlimTools\Http\Response;
+use \Slim\Exception\NotFoundException;
 
-    public function __construct(App $app, Slim $slim, View $view)
-    {
-        $this->app = $app;
-        $this->slim = $slim;
-        $this->view = $view;
-    }
+class Router {
+	protected $slim;
+	protected $passed;
+	protected $servicePrefix;
 
-    protected function getControllerService($prefix, $serviceName) {
-        $serviceId = 'controller.'.$prefix.'.'.$serviceName;
-        $service = null;
-        try {
-            $service = $this->app->getContainer()->get($serviceId);
-        } catch (InvalidArgumentException $error) {
-            //don't have to do anything to handle the error route
-            //will pass anyway in the next step if $service is null
-        }
-        return $service;
-    }
+	public function __construct( Slim $slim ) {
+		$this->slim = $slim;
+	}
 
-    protected function getActionName($name) {
-        $method = strtolower($this->slim->request->getMethod());
-        $actionPrefix = $method === 'get' ? null : $method;
-        $action = $name.'Action';
-        if($actionPrefix) {
-            $action = $actionPrefix . ucfirst($action);
-        }
-        return $action;
-    }
+	protected function getControllerService( $prefix, $serviceName ) {
+		$serviceId = 'controller.' . $prefix . '.' . $serviceName;
+		if ( $this->slim->getContainer()->has( $serviceId ) ) {
+			return $this->slim->getContainer()->get( $serviceId );
+		}
 
-    protected function callAction($prefix, $serviceName, $action, $params = array()) {
-        $this->passed = false;
-        $service = $this->getControllerService($prefix, $serviceName);
-        $actionName = $this->getActionName($action);
+		return null;
+	}
 
-        if(!is_callable(array($service, $actionName))) {
-            $this->slim->pass();
-            $this->passed = true;
-            return;
-        }
+	protected function getActionName( Request $request, $name ) {
+		$method       = strtolower( $request->getMethod() );
+		$actionPrefix = $method === 'get' ? null : $method;
+		$action       = $name . 'Action';
+		if ( $actionPrefix ) {
+			$action = $actionPrefix . ucfirst( $action );
+		}
 
-        return call_user_func_array(array($service, $actionName), $params);
-    }
+		return $action;
+	}
 
-    protected function handleRequest($params) {
-        if(count($params) >= 1) {
-            $controller = array_shift($params);
-            $action = array_shift($params) ?: 'index';
-            $data = $this->callAction($this->servicePrefix, $controller, $action, $params);
-            if(!$this->passed) {
-                $this->render($data, $controller, $action);
-            }
-        } else {
-            $this->slim->pass();
-        }
-    }
+	protected function callAction( Request $request, Response $response, $serviceName, $action, $params = array() ): Response {
+		$service    = $this->getControllerService( $this->servicePrefix, $serviceName );
+		$actionName = $this->getActionName( $request, $action );
 
-    protected function render($data, $controller, $action) {
-        $this->slim->view($this->view);
-        $this->slim->render($this->template, $data);
-    }
+		if ( ! is_callable( array( $service, $actionName ) ) ) {
+			throw new NotFoundException( $request, $response );
+		}
 
-    protected function attachRoute($servicePrefix, $urlPrefix = '') {
-        $this->servicePrefix = $servicePrefix;
-        $route = $this->slim->map($urlPrefix.'/:params+', function($params) {
-            $this->handleRequest($params);
-        });
-        call_user_func_array(array($route, 'via'), array('GET', 'POST', 'DELETE', 'PUT'));
-    }
+		array_unshift( $params, $request, $response );
+
+		return call_user_func_array( array( $service, $actionName ), $params );
+	}
+
+	protected function handleRequest( Request $request, Response $response, $params ): Response {
+		if ( count( $params ) >= 1 ) {
+			$controller = array_shift( $params );
+			$action     = array_shift( $params ) ?: 'index';
+
+			$response = $this->callAction( $request, $response, $controller, $action, $params );
+
+			if ( $response->isSkipViewRendering() ) {
+				return $response;
+			}
+
+			return $this->render( $request, $response, $controller, $action );
+		}
+
+		/*
+		 * TODO: it would be nice to pass to the next route,
+		 * to allow custom routes within the prefix.
+		 * have not yet found a way to get this done
+		 * with slim 3.
+		 */
+		throw new NotFoundException($request, $response);
+	}
+
+	protected function render( Request $request, Response $response, string $controller, string $action ): Response {
+		return $response;
+	}
+
+	protected function attachRoute( $servicePrefix, $urlPrefix = '' ) {
+		$this->servicePrefix = $servicePrefix;
+		$self                = $this;
+		$this->slim->map( [
+			'GET',
+			'POST',
+			'DELETE',
+			'PUT'
+		], $urlPrefix . '[/{params:.*}]', function ( $request, $response ) use ( $self ) {
+			$params = explode( '/', $request->getAttribute( 'params' ) );
+
+			return $self->handleRequest( $request, $response, $params );
+		} );
+	}
 }
