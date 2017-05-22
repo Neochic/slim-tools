@@ -17,6 +17,10 @@ use \Neochic\SlimTools\Misc\Session;
 use \Neochic\SlimTools\Misc\JSend;
 use \Neochic\SlimTools\Http\Response;
 use \Neochic\SlimTools\Serializer\SerializationContextFactory;
+use \Neochic\SlimTools\Handlers\Error;
+use \Neochic\SlimTools\Handlers\PhpError;
+use \Neochic\SlimTools\Handlers\NotFound;
+use \Neochic\SlimTools\Handlers\NotAllowed;
 
 class ServiceConfiguration implements ServiceConfigurationInterface
 {
@@ -41,6 +45,18 @@ class ServiceConfiguration implements ServiceConfigurationInterface
 					'middlewares' => []
 				]
 			],
+			'errorHandler' => function(Container $c) {
+				return new Error($c['settings']['displayErrorDetails'], $c['jsend']);
+			},
+			'phpErrorHandler' => function(Container $c) {
+				return new PhpError($c['settings']['displayErrorDetails'], $c['jsend']);
+			},
+			'notFoundHandler' => function(Container $c) {
+				return new NotFound($c['jsend']);
+			},
+			'notAllowedHandler' => function(Container $c) {
+				return new NotAllowed($c['jsend']);
+			},
 			'router.rest' => function($c) {
 				return new RestRouter($c['slim'], $c['serializer'], $c['jsend']);
 			},
