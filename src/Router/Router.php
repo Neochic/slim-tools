@@ -36,6 +36,31 @@ class Router {
 		return $action;
 	}
 
+	protected function prepareParams(array $params, \ReflectionMethod $reflection, Request $request, Response $response) : array {
+		$actionParams = array();
+		reset($params);
+		foreach($reflection->getParameters() as $reflectionParam) {
+			$key = $reflectionParam->getPosition();
+			if($key < 2) {
+				$class = $reflectionParam->getClass();
+				if($class) {
+					$implementedInterfaces = class_implements($class->getName());
+					if (isset($implementedInterfaces['Psr\\Http\\Message\\RequestInterface'])) {
+						$actionParams[$key] = $request;
+						continue;
+					}
+
+					if (isset($implementedInterfaces['Psr\\Http\\Message\\ResponseInterface'])) {
+						$actionParams[$key] = $response;
+						continue;
+					}
+				}
+			}
+			$actionParams[$key] = each($params)['value'];
+		}
+		return $actionParams;
+	}
+
 	protected function callAction( Request $request, Response $response, $serviceName, $action, $params = array() ): Response {
 		$service    = $this->getControllerService( $this->servicePrefix, $serviceName );
 		$actionName = $this->getActionName( $request, $action );
@@ -44,9 +69,10 @@ class Router {
 			throw new NotFoundException( $request, $response );
 		}
 
-		array_unshift( $params, $request, $response );
+		$reflection = new \ReflectionMethod($service, $actionName);
+		$actionParams = $this->prepareParams($params, $reflection, $request, $response);
 
-		return call_user_func_array( array( $service, $actionName ), $params );
+		return call_user_func_array( array( $service, $actionName ),  $actionParams);
 	}
 
 	protected function handleRequest( Request $request, Response $response, $params ): Response {

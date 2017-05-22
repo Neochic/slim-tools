@@ -16,7 +16,6 @@ use \Neochic\SlimTools\Factory\SerializerFactory;
 use \Neochic\SlimTools\Misc\Session;
 use \Neochic\SlimTools\Misc\JSend;
 use \Neochic\SlimTools\Http\Response;
-use \Neochic\SlimTools\Serializer\GroupsExclusionStrategy;
 use \Neochic\SlimTools\Serializer\SerializationContextFactory;
 
 class ServiceConfiguration implements ServiceConfigurationInterface
