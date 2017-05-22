@@ -15,10 +15,11 @@ class Response extends SlimResponse {
 	/**
 	 * @return SerializationContext
 	 */
-	public function getSerializationContext() : SerializationContext {
-		if(!$this->serializationContext) {
+	public function getSerializationContext(): SerializationContext {
+		if ( ! $this->serializationContext ) {
 			$serializationContextFactory = new SerializationContextFactory();
-			return $serializationContextFactory->createSerializationContext(array('everyone'));
+
+			return $serializationContextFactory->createSerializationContext( array( 'everyone' ) );
 		}
 
 		return $this->serializationContext;
@@ -29,6 +30,15 @@ class Response extends SlimResponse {
 	 */
 	public function setSerializationContext( SerializationContext $context ) {
 		$this->serializationContext = $context;
+	}
+
+	/**
+	 * @param array $groups
+	 */
+	public function setSerializationContextGroups( array $groups ) {
+		$serializationContextFactory = new SerializationContextFactory();
+		$context                     = $serializationContextFactory->createSerializationContext( $groups );
+		$this->setSerializationContext( $context );
 	}
 
 	/**
