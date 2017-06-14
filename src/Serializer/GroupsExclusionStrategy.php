@@ -30,10 +30,12 @@ class GroupsExclusionStrategy implements ExclusionStrategyInterface {
 			return false;
 		}
 
-		if ( $navigatorContext->getDepth() > count( $this->groups ) ) {
+		$depth = $this->getRealDepth($navigatorContext);
+
+		if ( $depth > count( $this->groups ) ) {
 			array_push( $this->groups, $this->savedSubGroups );
 		} else {
-			while ( $navigatorContext->getDepth() < count( $this->groups ) ) {
+			while ( $depth < count( $this->groups ) ) {
 				array_pop( $this->groups );
 			}
 		}
@@ -58,5 +60,16 @@ class GroupsExclusionStrategy implements ExclusionStrategyInterface {
 		$this->savedSubGroups = array_unique( $this->savedSubGroups );
 
 		return ! $match;
+	}
+
+	protected function getRealDepth(Context $context) {
+		$depth = 0;
+		foreach($context->getMetadataStack() as $metadata) {
+			if(!($metadata instanceof PropertyMetadata)) {
+				$depth++;
+			}
+		}
+
+		return $depth;
 	}
 }
