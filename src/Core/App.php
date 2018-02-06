@@ -20,6 +20,12 @@ class App extends Bootable
 			ini_set("display_errors", 0);
 		}
 
+        /**
+         * disable php cache management to be able
+         * to set own cache headers
+         */
+        session_cache_limiter('');
+
 		$this->routers = $routers;
 		$this->middlewares = $middlewares;
 		$this->slim = $slim;
