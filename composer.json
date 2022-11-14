@@ -15,7 +15,7 @@
     "doctrine/orm": "^2.10.2",
     "doctrine/migrations": "^3.5.2",
     "jms/serializer": "^3.18.2",
-    "doctrine/common": "^2.7",
+    "doctrine/common": "^3.4.3",
     "symfony/validator": "^3.3"
   },
   "autoload": {
