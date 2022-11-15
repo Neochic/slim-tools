@@ -16,7 +16,7 @@
     "doctrine/migrations": "^2.3.0",
     "jms/serializer": "^3.18.2",
     "doctrine/common": "^3.4.3",
-    "symfony/validator": "^3.3"
+    "symfony/validator": "^5.2"
   },
   "autoload": {
     "psr-4": { "Neochic\\SlimTools\\": "src/" }
