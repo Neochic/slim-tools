@@ -12,9 +12,9 @@ class SerializationContext extends JMSSerializationContext {
 	 * separate groups for relations
 	 */
 
-	public function addExclusionStrategy( ExclusionStrategyInterface $strategy ) {
+	public function addExclusionStrategy( ExclusionStrategyInterface $strategy ): self {
 		if ( get_class( $strategy ) === 'JMS\Serializer\Exclusion\GroupsExclusionStrategy' ) {
-			$strategy = new GroupsExclusionStrategy( $this->attributes->get( 'groups' )->get() );
+			$strategy = new GroupsExclusionStrategy( $this->getAttribute( 'groups' ) );
 		}
 
 		return parent::addExclusionStrategy( $strategy );

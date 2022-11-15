@@ -18,14 +18,14 @@ class GroupsExclusionStrategy implements ExclusionStrategyInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function shouldSkipClass( ClassMetadata $metadata, Context $navigatorContext ) {
+	public function shouldSkipClass( ClassMetadata $metadata, Context $navigatorContext ): bool {
 		return false;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function shouldSkipProperty( PropertyMetadata $property, Context $navigatorContext ) {
+	public function shouldSkipProperty( PropertyMetadata $property, Context $navigatorContext ): bool {
 		if ( empty( $property->groups ) ) {
 			return false;
 		}
