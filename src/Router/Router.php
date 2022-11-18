@@ -56,7 +56,7 @@ class Router {
 					}
 				}
 			}
-			$actionParams[$key] = each($params)['value'];
+            $actionParams[$key] = array_shift($params);
 		}
 		return $actionParams;
 	}
